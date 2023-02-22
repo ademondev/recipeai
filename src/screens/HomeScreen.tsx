@@ -1,7 +1,7 @@
 import MainBottomMenu from '../components/MainBottomMenu';
-import { MainHeader } from '../components/MainHeader';
+import MainHeader from '../components/MainHeader';
 import MainIngredients from '../components/MainIngredients';
-import MainRecipe from '../components/MainRecipe';
+import MainRecipe from '../components/MainRecipes';
 
 function HomeScreen() {
     return (<>

@@ -13,11 +13,11 @@ const initialState: InitialStateInterface = {
     ingredients: []
 }
 
-export const counterSlice = createSlice({
+export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
-        addIngredient: (state, action: PayloadAction<{ id: number, name: string}>) => {
+        addIngredient: (state, action: PayloadAction<{ id: number, name: string }>) => {
             if (action.payload.name === '') return;
             state.ingredients.push({
                 id: action.payload.id,
@@ -31,6 +31,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addIngredient, removeIngredient } = counterSlice.actions;
+export const { addIngredient, removeIngredient } = ingredientsSlice.actions;
 
-export default counterSlice.reducer;
+export default ingredientsSlice.reducer;

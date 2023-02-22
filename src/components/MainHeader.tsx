@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-export function MainHeader() {
+const MainHeader: React.FunctionComponent = () =>{
   const { classes } = useStyles();
   const [input, setInput] = useState<string>('');
   const dispatch = useAppDispatch();
@@ -75,3 +75,5 @@ export function MainHeader() {
     </Header>
   );
 }
+
+export default MainHeader;
