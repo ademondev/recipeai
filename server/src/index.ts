@@ -1,6 +1,7 @@
 import express from 'express';
 import { Configuration, OpenAIApi } from 'openai';
-import promptPreProcess from './promptPreProcess';
+import promptPreProcess from './promptPreProcess.js';
+import { extractRecipeDataFromResponse } from './promptPreProcess.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -18,13 +19,15 @@ app.post('/completion', async (req, res) => {
     try {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `${req.body.message}`,
+            prompt: `${promptPreProcess(req.body.message)}`,
             max_tokens: MAX_TOKENS
         });
-        console.log(req.body.message)
+        console.log(req.body.message);
+        const processedData = extractRecipeDataFromResponse(response.data.choices[0].text === undefined ? '' : response.data.choices[0].text);
+        console.log(processedData === null ? 'There was an error' : processedData)
         return res.status(200).json({
             success: true,
-            data: response.data.choices[0].text
+            data: processedData
         });
     } catch (error: any) {
         return res.status(500).json({
