@@ -19,7 +19,7 @@ interface RecipeData {
     recipeName: string; 
     cookTime: string; 
     ingredients: string[];
-    recipe: string;
+    recipe: string[];
 }
 
 const extractRecipeDataFromResponse = (response: string): RecipeData | null => {
@@ -30,7 +30,7 @@ const extractRecipeDataFromResponse = (response: string): RecipeData | null => {
         const recipeName: string = match[1];
         const cookTime: string = match[2];
         const ingredients: string[] = match[3].split(', ');
-        const recipe: string = match[4];
+        const recipe: string[] = splitRecipeList(match[4]);
 
         console.log(`Recipe name: ${recipeName}`);
         console.log(`Cook time: ${cookTime}`);
@@ -48,6 +48,14 @@ const extractRecipeDataFromResponse = (response: string): RecipeData | null => {
         return null;
     }
 }
+
+const splitRecipeList = (recipeList: string): string[] => {
+    const regex = /\d+\.\s+/g; // Matches any number followed by a period and whitespace
+    const steps = recipeList.split(regex); // Split the string by the regex pattern
+    // Filter out any empty or whitespace-only strings
+    return steps.filter((step) => step.trim().length > 0);
+}
+  
 
 export { extractRecipeDataFromResponse };
 export default promptPreProcess;
