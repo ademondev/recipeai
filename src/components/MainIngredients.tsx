@@ -1,11 +1,12 @@
-import { Container, Text, Badge } from '@mantine/core';
+import { Container, Text, Badge, Button } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { removeIngredient } from '../features/counter/ingredients/ingredientsSlice';
+import { fetchRecipeData } from '../features/counter/recipe/recipeDataSlice';
 
 interface MainIngredientsProps {
-    
+
 }
- 
+
 const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
     const ingredients = useAppSelector(state => state.ingredients.ingredients);
     const dispatch = useAppDispatch();
@@ -22,16 +23,21 @@ const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
         <Container>
             {ingredients.map(ingredient => {
                 return (
-                    <Badge 
+                    <Badge
                         variant="filled"
                         onClick={() => dispatch(removeIngredient(ingredient.id))}
                     >
                         {ingredient.name}
                     </Badge>
                 );
-            })}        
+            })}
+            <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}
+                onClick={() => dispatch(fetchRecipeData(ingredients.map(ingredient => ingredient.name)))}
+            >
+                Look for recipe
+            </Button>
         </Container>
     </>);
 }
- 
+
 export default MainIngredients;
