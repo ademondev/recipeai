@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import promptPreProcess from './promptPreProcess.js';
 import { extractRecipeDataFromResponse } from './promptPreProcess.js';
 import * as dotenv from 'dotenv';
+import cors from 'cors';
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ const openai = new OpenAIApi(configuration);
 const MAX_TOKENS = 2000;
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/completion', async (req, res) => {
     try {
