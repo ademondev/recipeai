@@ -1,14 +1,16 @@
 import { Container, Paper, Text, Image, Title } from '@mantine/core';
+import { List } from '@mantine/core';
 import * as React from 'react';
 
 interface RecipeComponentProps {
-    name: string
-    cookTime: number
-    requiredIngredients: string
-    preparation: string
+    recipeName: string;
+    cookTime: string;
+    ingredients: string[];
+    recipe: string[];
 }
 
-const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ name, cookTime, requiredIngredients, preparation }) => {
+
+const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe }) => {
     return (
         <Paper shadow="xl">
             <Container style={{ display: 'flex' }}>
@@ -23,13 +25,13 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ name, 
                         Name
                     </Title>
                     <Text>
-                        { name ? name : 'Name not available'}
+                        {recipeName ? recipeName : 'Name not available'}
                     </Text>
                     <Title order={3}>
                         Cook time
                     </Title>
                     <Text>
-                        { cookTime ? cookTime : 'Time not available'}
+                        {cookTime ? cookTime : 'Time not available'}
                     </Text>
                 </Container>
             </Container>
@@ -38,7 +40,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ name, 
                     Required ingredients
                 </Title>
                 <Text>
-                    { requiredIngredients ? requiredIngredients : 'Ingredients not available'}
+                    {ingredients ? ingredients : 'Ingredients not available'}
                 </Text>
             </Container>
             <Container>
@@ -46,7 +48,11 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ name, 
                     Preparation
                 </Title>
                 <Text>
-                    { preparation ? preparation : 'Preparation not available' }
+                    <List>
+                        {recipe ?
+                            recipe.map(recipeItem => <List.Item>{recipeItem}</List.Item>) :
+                            'Preparation not available'}
+                    </List>
                 </Text>
             </Container>
         </Paper>
