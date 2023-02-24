@@ -8,8 +8,6 @@ function HomeScreen() {
         <MainHeader />
         <MainIngredients />
         <MainRecipe />
-        <MainRecipe />
-        <MainRecipe />
         <MainBottomMenu />
     </>);
 }
