@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice.js';
 import ingredientsSlice from '../features/counter/ingredients/ingredientsSlice';
+import recipeDataSlice from '../features/counter/recipe/recipeDataSlice.js';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
-    ingredients: ingredientsSlice
+    ingredients: ingredientsSlice,
+    recipeData: recipeDataSlice
   }
 });
 
