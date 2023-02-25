@@ -54,6 +54,7 @@ const fetchRecipeData = createAsyncThunk('recipeData/fetchRecipeData', async (in
 });
 
 const fetchGoogleImages = createAsyncThunk('recipeData/fetchGoogleImages', async (searchTerm: string) => {
+  if (searchTerm === '') return;
   const response = await fetch(ENDPOINT_GOOGLE_IMAGES, {
     method: 'POST',
     headers: {
