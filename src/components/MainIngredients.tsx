@@ -12,6 +12,11 @@ const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
     const dispatch = useAppDispatch();
     const state = useAppSelector(state => state.recipeData.recipeDataStatus);
 
+    function lookForRecipe() {
+        if (ingredients.length < 0) return;
+        dispatch(fetchRecipeData(ingredients.map(ingredient => ingredient.name)));
+    }
+
     return (<>
         <Text
             weight={600}
@@ -34,7 +39,7 @@ const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
                 );
             })}
             <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}
-                onClick={() => dispatch(fetchRecipeData(ingredients.map(ingredient => ingredient.name)))}
+                onClick={() => lookForRecipe()}
             >
                 Look for recipe
             </Button>
