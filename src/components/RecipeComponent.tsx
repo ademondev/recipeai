@@ -1,6 +1,8 @@
 import { Container, Paper, Text, Image, Title } from '@mantine/core';
 import { List } from '@mantine/core';
 import * as React from 'react';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchGoogleImages } from '../features/counter/recipe/recipeDataSlice';
 
 interface RecipeComponentProps {
     recipeName: string;
@@ -9,16 +11,19 @@ interface RecipeComponentProps {
     recipe: string[];
 }
 
-
 const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe }) => {
+    const src = useAppSelector(state => state.recipeData.currentImage?.url);
+    const dispatch = useAppDispatch();
+    
     return (
         <Paper shadow="xl">
             <Container style={{ display: 'flex' }}>
                 <Image
                     radius="md"
-                    src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                    src={src}
                     alt="Random unsplash image"
                     width={200}
+                    onClick={() => dispatch(fetchGoogleImages(recipeName))}
                 />
                 <Container>
                     <Title order={3}>
@@ -50,7 +55,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                 <Text>
                     <List>
                         {recipe ?
-                            recipe.map(recipeItem => <List.Item>{recipeItem}</List.Item>) :
+                            recipe.map(recipeItem => <List.Item key={recipeItem}>{recipeItem}</List.Item>) :
                             'Preparation not available'}
                     </List>
                 </Text>
