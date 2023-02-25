@@ -18,6 +18,7 @@
     "@mantine/notifications": "^5.10.4",
     "@mantine/nprogress": "^5.10.4",
     "@reduxjs/toolkit": "^1.9.3",
+    "@types/google-images": "^2.1.1",
     "@types/react-redux": "^7.1.25",
     "dayjs": "^1.11.7",
     "embla-carousel-react": "^7.0.9",
