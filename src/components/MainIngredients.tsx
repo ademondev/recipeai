@@ -10,6 +10,7 @@ interface MainIngredientsProps {
 const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
     const ingredients = useAppSelector(state => state.ingredients.ingredients);
     const dispatch = useAppDispatch();
+    const state = useAppSelector(state => state.recipeData.recipeDataStatus);
 
     return (<>
         <Text
@@ -24,6 +25,7 @@ const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
             {ingredients.map(ingredient => {
                 return (
                     <Badge
+                        key={ingredient.id}
                         variant="filled"
                         onClick={() => dispatch(removeIngredient(ingredient.id))}
                     >
@@ -36,6 +38,9 @@ const MainIngredients: React.FunctionComponent<MainIngredientsProps> = () => {
             >
                 Look for recipe
             </Button>
+            <Text>
+                {state}
+            </Text>
         </Container>
     </>);
 }
