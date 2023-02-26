@@ -1,8 +1,17 @@
-import { Container, Paper, Text, Image, Title } from '@mantine/core';
+import { Container, Paper, Text, Image, Title, Button, Space } from '@mantine/core';
 import { List } from '@mantine/core';
+import { createStyles } from '@mantine/styles';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchGoogleImages } from '../features/counter/recipe/recipeDataSlice';
+
+const useStyles = createStyles((theme) => ({
+    buttons: {
+        width: '100%',
+        height: '3em',
+        margin: '0.1em'
+    }
+}));
 
 interface RecipeComponentProps {
     recipeName: string;
@@ -12,10 +21,11 @@ interface RecipeComponentProps {
 }
 
 const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe }) => {
-    const src = useAppSelector(state => state.recipeData.currentImage?.url);
+    const { classes } = useStyles();
+    const src = useAppSelector(state => state.recipeData?.googleImagesData[0]?.url);
     const dispatch = useAppDispatch();
     
-    return (
+    return (<>
         <Paper shadow="xl">
             <Container style={{ display: 'flex' }}>
                 <Image
@@ -45,7 +55,12 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                     Required ingredients
                 </Title>
                 <Text>
-                    {ingredients ? ingredients : 'Ingredients not available'}
+                    {ingredients ? 
+                        // current.charAt(0).toUpperCase only upper casesthe first char of every element of the array
+                        ingredients.reduce((prev, current) => `${current.charAt(0).toUpperCase() + current.slice(1)}, ${prev}`, '')
+                        : 
+                        'Ingredients not available'
+                    }
                 </Text>
             </Container>
             <Container>
@@ -60,8 +75,20 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                     </List>
                 </Text>
             </Container>
+            <Container styles={{ width: '90%' }}>
+                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
+                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
+                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
+            </Container>
+
         </Paper>
-    );
+        <Space h='xl' />
+        <Space h='xl' />
+        <Space h='xl' />
+        <Space h='xl' />
+        <Space h='xl' />
+        <Space h='xl' />
+        </>);
 }
 
 export default RecipeComponent;
