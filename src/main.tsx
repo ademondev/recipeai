@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import store from './app/store';
+import store, { persistor } from './app/store';
 import { Provider } from 'react-redux';
 import { MantineProvider } from '@mantine/core';
 import { registerSW } from 'virtual:pwa-register';
@@ -11,6 +11,7 @@ import {
 import HomeScreen from './screens/HomeScreen';
 import SavedRecipesScreen from './screens/SavedRecipesScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { PersistGate } from 'redux-persist/integration/react'
 
 const updateSW = registerSW({
   onOfflineReady() {
@@ -37,9 +38,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <RouterProvider router={router} />
-      </MantineProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <RouterProvider router={router} />
+        </MantineProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
 )
