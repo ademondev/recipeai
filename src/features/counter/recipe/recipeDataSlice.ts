@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Image } from 'google-images';
-import { useAppDispatch } from '../../../app/hooks';
+import { loadImageStorage, STORAGE_KEY } from '../../../utils/localStorageRecipeData';
 
 interface RecipeInterface {
   recipeName: string,
@@ -30,10 +30,12 @@ const initialState = {
         recipe: []
     } as RecipeInterface,
     recipeDataStatus: RecipeDataStatuses.PENDING,
-    googleImagesData: [] as Image[],
-    currentImage: {
-      url: DEFAULT_IMAGE_URL
-    } as Image,
+    // The default image for recipes is DEFAULT_IMAGE_URL.
+    // It will then be replaced by an array of ten images 
+    // (represented by ten objects). This array should never
+    // be empty, instead, it should make another call to 
+    // fetchGoogleImages before running out of images.
+    googleImagesData: loadImageStorage(STORAGE_KEY, { url: DEFAULT_IMAGE_URL, type: '', height: 292, width: 390, size: 100, thumbnail: { height: 10, width: 8, url: '' } }),
     googleImagesStatus: GoogleImagesStatuses.PENDING,
 };
 
@@ -71,6 +73,10 @@ const recipeDataSlice = createSlice({
   name: 'recipeData',
   initialState,
   reducers: {
+    deleteFirstImageOfArray: (state) => {
+      if (state.googleImagesData.length < 2) return;
+      state.googleImagesData.shift();
+    }
   },
   extraReducers: {
     // fetchRecipeData
@@ -95,9 +101,9 @@ const recipeDataSlice = createSlice({
     },
     [fetchGoogleImages.fulfilled.toString()]: (state, action) => {
       state.googleImagesStatus = GoogleImagesStatuses.FULFILLED;
-      if (action.payload === null || action.payload === undefined) return;
+      if (action.payload.data === null || action.payload.data === undefined) return;
       state.googleImagesData = action.payload.data as Image[];
-      state.currentImage = action.payload.data[0];
+      console.log("🚀 ~ file: recipeDataSlice.ts:109 ~ [fetchGoogleImages.fulfilled.toString ~ action.payload.data:", action.payload.data);
     },
     [fetchGoogleImages.rejected.toString()]: (state) => {
       state.googleImagesStatus = GoogleImagesStatuses.REJECTED;
