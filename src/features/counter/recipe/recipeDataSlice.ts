@@ -73,8 +73,8 @@ const recipeDataSlice = createSlice({
   name: 'recipeData',
   initialState,
   reducers: {
-    deleteFirstImageOfArray: (state) => {
-      if (state.googleImagesData.length < 2) return;
+    nextImage: (state) => {
+      if (state.googleImagesData.length < 1) return;
       state.googleImagesData.shift();
     }
   },
@@ -112,4 +112,5 @@ const recipeDataSlice = createSlice({
 });
 
 export { fetchRecipeData, fetchGoogleImages };
+export const { nextImage } = recipeDataSlice.actions;
 export default recipeDataSlice.reducer;

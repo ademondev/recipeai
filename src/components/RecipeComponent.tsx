@@ -3,7 +3,7 @@ import { List } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchGoogleImages } from '../features/counter/recipe/recipeDataSlice';
+import { fetchGoogleImages, nextImage } from '../features/counter/recipe/recipeDataSlice';
 
 const useStyles = createStyles((theme) => ({
     buttons: {
@@ -23,7 +23,18 @@ interface RecipeComponentProps {
 const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe }) => {
     const { classes } = useStyles();
     const src = useAppSelector(state => state.recipeData?.googleImagesData[0]?.url);
+    const googleImagesData = useAppSelector(state => state.recipeData.googleImagesData);
     const dispatch = useAppDispatch();
+
+    function swapImage() {
+        // If the image data storage is empty, fetch more images.
+        // If it's not empty, swap to the next image.
+        if (googleImagesData.length === 0) {
+            dispatch(fetchGoogleImages(recipeName));
+            return;
+        }
+        dispatch(nextImage());
+    }
     
     return (<>
         <Paper shadow="xl">
@@ -33,7 +44,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                     src={src}
                     alt="Random unsplash image"
                     width={200}
-                    onClick={() => dispatch(fetchGoogleImages(recipeName))}
+                    onClick={() => swapImage()}
                 />
                 <Container>
                     <Title order={3}>
