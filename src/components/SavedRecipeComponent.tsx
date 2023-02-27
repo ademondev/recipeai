@@ -20,7 +20,6 @@ interface SavedRecipeComponentProps extends RecipeComponentProps {
 
 const SavedRecipeComponent: React.FunctionComponent<SavedRecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe, id, src }) => {
     const { classes } = useStyles();
-    const savedRecipesMap = useAppSelector(state => state.recipeData.savedRecipesStorage);
     const dispatch = useAppDispatch();
 
     return (<>
@@ -71,14 +70,6 @@ const SavedRecipeComponent: React.FunctionComponent<SavedRecipeComponentProps> =
                 </Text>
             </Container>
             <Container styles={{ width: '90%' }}>
-                <Button
-                    className={classes.buttons}
-                    variant="gradient"
-                    gradient={{ from: 'indigo', to: 'cyan' }}
-                    onClick={() => console.log(savedRecipesMap)}
-                >
-                    Show saved recipes to the console
-                </Button>
                 <Button
                     className={classes.buttons}
                     variant="gradient"
