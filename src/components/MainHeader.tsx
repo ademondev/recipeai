@@ -3,7 +3,7 @@ import { createStyles, Header, Container, TextInput, ActionIcon } from '@mantine
 import { RiAtLine } from 'react-icons/ri';
 import { GrFormAdd } from "react-icons/gr";
 import { useAppDispatch } from '../app/hooks';
-import { addIngredient } from '../features/counter/ingredients/ingredientsSlice';
+import { addIngredient } from '../features/ingredients/ingredientsSlice';
 
 const HEADER_HEIGHT = 60;
 

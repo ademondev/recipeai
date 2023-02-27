@@ -3,7 +3,7 @@ import { List } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchGoogleImages, nextImage } from '../features/counter/recipe/recipeDataSlice';
+import { addToSavedRecipes, fetchGoogleImages, nextImage } from '../features/recipe/recipeDataSlice';
 
 const useStyles = createStyles((theme) => ({
     buttons: {
@@ -18,12 +18,14 @@ interface RecipeComponentProps {
     cookTime: string;
     ingredients: string[];
     recipe: string[];
+    id: string;
 }
 
-const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe }) => {
+const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipeName, cookTime, ingredients, recipe, id }) => {
     const { classes } = useStyles();
     const src = useAppSelector(state => state.recipeData?.googleImagesData[0]?.url);
     const googleImagesData = useAppSelector(state => state.recipeData.googleImagesData);
+    const savedRecipesMap = useAppSelector(state => state.recipeData.savedRecipes);
     const dispatch = useAppDispatch();
 
     function swapImage() {
@@ -35,7 +37,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
         }
         dispatch(nextImage());
     }
-    
+
     return (<>
         <Paper shadow="xl">
             <Container style={{ display: 'flex' }}>
@@ -66,10 +68,10 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                     Required ingredients
                 </Title>
                 <Text>
-                    {ingredients ? 
+                    {ingredients ?
                         // current.charAt(0).toUpperCase only upper casesthe first char of every element of the array
                         ingredients.reduce((prev, current) => `${current.charAt(0).toUpperCase() + current.slice(1)}, ${prev}`, '')
-                        : 
+                        :
                         'Ingredients not available'
                     }
                 </Text>
@@ -87,9 +89,22 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                 </Text>
             </Container>
             <Container styles={{ width: '90%' }}>
-                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
-                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
-                <Button className={classes.buttons} variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Test</Button>
+                <Button
+                    className={classes.buttons}
+                    variant="gradient"
+                    gradient={{ from: 'indigo', to: 'cyan' }}
+                    onClick={() => dispatch(addToSavedRecipes({ recipeName, ingredients, cookTime, id, recipe }))}
+                >
+                    Save Recipe
+                </Button>
+                <Button
+                    className={classes.buttons}
+                    variant="gradient"
+                    gradient={{ from: 'indigo', to: 'cyan' }}
+                    onClick={() => console.log(savedRecipesMap)}
+                >
+                    Show saved recipes to the console
+                </Button>
             </Container>
 
         </Paper>
@@ -99,7 +114,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
         <Space h='xl' />
         <Space h='xl' />
         <Space h='xl' />
-        </>);
+    </>);
 }
 
 export default RecipeComponent;

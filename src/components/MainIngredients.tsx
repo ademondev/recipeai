@@ -1,7 +1,7 @@
 import { Container, Text, Badge, Button } from '@mantine/core';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { removeIngredient } from '../features/counter/ingredients/ingredientsSlice';
-import { fetchRecipeData } from '../features/counter/recipe/recipeDataSlice';
+import { removeIngredient } from '../features/ingredients/ingredientsSlice';
+import { fetchRecipeData } from '../features/recipe/recipeDataSlice';
 
 interface MainIngredientsProps {
 

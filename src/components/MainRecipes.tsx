@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { Text } from '@mantine/core';
 import RecipeComponent from './RecipeComponent';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchGoogleImages } from '../features/counter/recipe/recipeDataSlice';
+import { fetchGoogleImages } from '../features/recipe/recipeDataSlice';
 
 interface MainRecipeProps {
 
 }
 
 const MainRecipe: React.FunctionComponent<MainRecipeProps> = () => {
-    const { recipeName, cookTime, ingredients, recipe } = useAppSelector((state) => state.recipeData.recipeData);
+    const { recipeName, cookTime, ingredients, recipe, id } = useAppSelector((state) => state.recipeData.recipeData);
     const dispatch = useAppDispatch();
     useEffect(() => {
         if (recipeName !== '') {
@@ -32,6 +32,7 @@ const MainRecipe: React.FunctionComponent<MainRecipeProps> = () => {
             cookTime={cookTime}
             ingredients={ingredients}
             recipe={recipe}
+            id={id}
         />
     </>);
 }
