@@ -1,6 +1,5 @@
-import React from 'react';
 import { createStyles } from '@mantine/styles';
-import { Button, Paper, Flex, ActionIcon } from '@mantine/core';
+import { Flex, ActionIcon } from '@mantine/core';
 import { AiOutlineHome } from 'react-icons/ai';
 import { FaRegBookmark } from 'react-icons/fa';
 import { FiSettings } from 'react-icons/fi';
