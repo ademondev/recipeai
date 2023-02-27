@@ -9,6 +9,12 @@ export interface RecipeInterface {
     id: string;
 }
 
+export interface SavedRecipesInterface extends RecipeInterface {
+    image: Image
+}
+
+type SavedRecipeId = string;
+
 enum RecipeDataStatuses {
     PENDING = 'pending',
     FULFILLED = 'fulfilled',
@@ -51,15 +57,18 @@ const initialState = {
         }
     ],
     googleImagesStatus: GoogleImagesStatuses.PENDING,
-    savedRecipes: [
+    savedRecipesStorage: [
         {
             recipeName: 'tomato',
             cookTime: '10',
             id: '12412sfaw',
             ingredients: ['tomato'],
-            recipe: ['asfasfsafs']
+            recipe: ['asfasfsafs'],
+            image: {
+                url: DEFAULT_IMAGE_URL
+            }
         }
-    ] as RecipeInterface[]
+    ] as SavedRecipesInterface[]
 };
 
 const ENDPOINT_RECIPE_DATA = 'http://localhost:5000/completion';
@@ -102,12 +111,12 @@ const recipeDataSlice = createSlice({
             if (state.googleImagesData.length < 1) return;
             state.googleImagesData.shift();
         },
-        addToSavedRecipes: (state, action : PayloadAction < RecipeInterface >) => {
-            if (state.savedRecipes.find(item => item.id === action.payload.id) !== undefined) return;
-            state.savedRecipes.push(action.payload);
+        addToSavedRecipesStorage: (state, action : PayloadAction<SavedRecipesInterface>) => {
+            if (state.savedRecipesStorage.find(item => item.id === action.payload.id) !== undefined) return;
+            state.savedRecipesStorage.push(action.payload);
         },
-        removeFromSavedRecipes: (state, action : PayloadAction < RecipeInterface >) => {
-            state.savedRecipes = state.savedRecipes.filter(item => item.id !== action.payload.id);
+        removeFromSavedRecipesStorage: (state, action: PayloadAction<SavedRecipeId>) => {
+            state.savedRecipesStorage = state.savedRecipesStorage.filter(item => item.id !== action.payload);
         }
     },
     extraReducers: {
@@ -138,10 +147,7 @@ const recipeDataSlice = createSlice({
         },
         [fetchGoogleImages.fulfilled.toString()]: (state, action) => {
             state.googleImagesStatus = GoogleImagesStatuses.FULFILLED;
-            if (action.payload.data === null || action.payload.data === undefined) 
-                return;
-            
-
+            if (action.payload.data === null || action.payload.data === undefined) return;
             state.googleImagesData = action.payload.data as Image[];
         },
         [fetchGoogleImages.rejected.toString()]: (state) => {
@@ -154,5 +160,5 @@ export {
     fetchRecipeData,
     fetchGoogleImages
 };
-export const { nextImage, addToSavedRecipes, removeFromSavedRecipes } = recipeDataSlice.actions;
+export const { nextImage, addToSavedRecipesStorage, removeFromSavedRecipesStorage } = recipeDataSlice.actions;
 export default recipeDataSlice.reducer;
