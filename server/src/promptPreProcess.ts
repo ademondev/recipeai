@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+
 const promptPreProcess = (ingredients : string[]) => {
     return `
     I'm going to give you a list of ingredients and you have to give me a recipe, its name, approximate cook time and required ingredients. If the ingredients list has an ingredient that shouldn't be used to cook or doesn't make sense, write "UNSAFE" after the "Recipe sense:". 
@@ -20,6 +22,7 @@ interface RecipeData {
     cookTime: string; 
     ingredients: string[];
     recipe: string[];
+    id: string
 }
 
 const extractRecipeDataFromResponse = (response: string): RecipeData | null => {
@@ -38,6 +41,11 @@ const extractRecipeDataFromResponse = (response: string): RecipeData | null => {
         console.log(`Recipe: ${recipe}`);
 
         const recipeDataObject: RecipeData = {
+            // nanoid provides a unique id for every recipe sent.
+            // this id is used for easing use of Map in the saved 
+            // recipes section of the app. In this case, nanoid(10)
+            // returns a unique string id of length 10
+            id: nanoid(10),
             recipeName,
             cookTime,
             ingredients,
