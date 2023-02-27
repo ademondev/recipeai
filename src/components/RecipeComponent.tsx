@@ -3,7 +3,7 @@ import { List } from '@mantine/core';
 import { createStyles } from '@mantine/styles';
 import * as React from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { addToSavedRecipes, fetchGoogleImages, nextImage } from '../features/recipe/recipeDataSlice';
+import { addToSavedRecipesStorage, fetchGoogleImages, nextImage } from '../features/recipe/recipeDataSlice';
 
 const useStyles = createStyles((theme) => ({
     buttons: {
@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 
-interface RecipeComponentProps {
+export interface RecipeComponentProps {
     recipeName: string;
     cookTime: string;
     ingredients: string[];
@@ -25,7 +25,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
     const { classes } = useStyles();
     const src = useAppSelector(state => state.recipeData?.googleImagesData[0]?.url);
     const googleImagesData = useAppSelector(state => state.recipeData.googleImagesData);
-    const savedRecipesMap = useAppSelector(state => state.recipeData.savedRecipes);
+    const savedRecipesMap = useAppSelector(state => state.recipeData.savedRecipesStorage);
     const dispatch = useAppDispatch();
 
     function swapImage() {
@@ -93,7 +93,7 @@ const RecipeComponent: React.FunctionComponent<RecipeComponentProps> = ({ recipe
                     className={classes.buttons}
                     variant="gradient"
                     gradient={{ from: 'indigo', to: 'cyan' }}
-                    onClick={() => dispatch(addToSavedRecipes({ recipeName, ingredients, cookTime, id, recipe }))}
+                    onClick={() => dispatch(addToSavedRecipesStorage({ recipeName, ingredients, cookTime, id, recipe, image: googleImagesData[0] }))}
                 >
                     Save Recipe
                 </Button>
