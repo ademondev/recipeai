@@ -41,7 +41,7 @@ router.post('/completion', async (req, res) => {
         console.log('request body: ', req.body);
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `${promptPreProcess(req.body.message)}`,
+            prompt: `${promptPreProcess(parseJsonByteArray(req.body).message)}`,
             max_tokens: MAX_TOKENS
         });
         const processedData = extractRecipeDataFromResponse(response.data.choices[0].text === undefined ? '' : response.data.choices[0].text);
@@ -62,7 +62,7 @@ router.post('/completion', async (req, res) => {
 
 router.post('/images', async (req, res) => {
     try {
-        const searchTerm = req.body.searchTerm;
+        const searchTerm = parseJsonByteArray(req.body).searchTerm;
         console.log('searchTerm: ', searchTerm);
         console.log('request body: ', req.body);
         console.log('parsed json array: ', parseJsonByteArray(req.body));
