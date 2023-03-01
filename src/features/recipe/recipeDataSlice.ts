@@ -113,7 +113,7 @@ const recipeDataSlice = createSlice({
         },
         addToSavedRecipesStorage: (state, action : PayloadAction<SavedRecipesInterface>) => {
             if (state.savedRecipesStorage.find(item => item.id === action.payload.id) !== undefined) return;
-            state.savedRecipesStorage.push(action.payload);
+            state.savedRecipesStorage.unshift(action.payload);
         },
         removeFromSavedRecipesStorage: (state, action: PayloadAction<SavedRecipeId>) => {
             state.savedRecipesStorage = state.savedRecipesStorage.filter(item => item.id !== action.payload);
