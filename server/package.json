@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc && nodemon ./dist/index.js"
+    "dev": "tsc && nodemon ./dist/index.js",
+    "start": "./node_modules/.bin/netlify-lambda serve src",
+    "build": "./node_modules/.bin/netlify-lambda build src"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +20,9 @@
     "express": "^4.18.2",
     "google-images": "^2.1.0",
     "nanoid": "^4.0.1",
-    "openai": "^3.1.0"
+    "netlify-lambda": "^2.0.16",
+    "openai": "^3.1.0",
+    "serverless-http": "^3.1.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
