@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { createStyles, Header, Container, TextInput, ActionIcon } from '@mantine/core';
-import { RiAtLine } from 'react-icons/ri';
-import { GrFormAdd } from "react-icons/gr";
+import { IoMdAdd } from "react-icons/io";
 import { useAppDispatch } from '../app/hooks';
 import { addIngredient } from '../features/ingredients/ingredientsSlice';
+import FullLogo from './FullLogo';
+import Logo from './Logo';
 
 const HEADER_HEIGHT = 60;
 
@@ -19,18 +20,34 @@ const useStyles = createStyles((theme) => ({
   header: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     height: '100%',
+    width: '100%',
+    paddingRight: 0
   },
   textInput: {
-    marginLeft: 30,
+    marginLeft: '5%',
     width: '70%'
   },
   inputButton: {
-    margin: 10,
+    background: 'linear-gradient(45deg, #2a408e, #318bda)',
+    margin: "1em",
     height: 36,
     width: 36,
-    borderRadius: 10
+    borderRadius: 10,
+  },
+  fullLogo: {
+    [theme.fn.smallerThan('sm')]: {
+      display: 'none'
+    }
+  },
+  logo: {
+    display: 'none',
+    [theme.fn.smallerThan('sm')]: {
+      display: 'inline-block'
+    }
   }
+
 }));
 
 const MainHeader: React.FunctionComponent = () =>{
@@ -51,7 +68,8 @@ const MainHeader: React.FunctionComponent = () =>{
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header}>
-        <RiAtLine size={28} />
+        <FullLogo fontSize={10} className={classes.fullLogo}/>
+        <Logo fontSize={10} className={classes.logo} />
         <TextInput
           className={classes.textInput}
           placeholder="Add ingredients"
@@ -69,7 +87,7 @@ const MainHeader: React.FunctionComponent = () =>{
           className={classes.inputButton}
           onClick={() => addIngredientAndClearState()}
         >
-          <GrFormAdd size={30} />
+          <IoMdAdd size={30}/>
         </ActionIcon>
       </Container>
     </Header>
