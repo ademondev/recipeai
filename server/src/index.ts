@@ -1,4 +1,5 @@
 import express from 'express';
+import serverless from 'serverless-http';
 import { Configuration, OpenAIApi } from 'openai';
 import promptPreProcess from './promptPreProcess.js';
 import { extractRecipeDataFromResponse } from './promptPreProcess.js';
@@ -73,3 +74,5 @@ app.post('/images', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);
 });
+
+export const handler = serverless(app);
