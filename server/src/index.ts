@@ -32,6 +32,7 @@ app.use(cors());
 
 router.post('/completion', async (req, res) => {
     try {
+        console.log('request body: ', req.body);
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
             prompt: `${promptPreProcess(req.body.message)}`,
