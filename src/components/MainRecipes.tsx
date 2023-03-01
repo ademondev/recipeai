@@ -25,7 +25,7 @@ const MainRecipe: React.FunctionComponent<MainRecipeProps> = () => {
             mt={20}
             mb={10}
         >
-            Recipes
+            Generated recipe
         </Text>
         <RecipeComponent
             recipeName={recipeName}
