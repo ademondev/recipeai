@@ -30,6 +30,12 @@ const imagesClient = new GoogleImages(CSE_ID, API_KEY);
 app.use(express.json());
 app.use(cors());
 
+function parseJsonByteArray(byteArray: Uint8Array): any {
+    const decoder = new TextDecoder('utf-8');
+    const jsonString = decoder.decode(byteArray);
+    return JSON.parse(jsonString);
+}
+
 router.post('/completion', async (req, res) => {
     try {
         console.log('request body: ', req.body);
@@ -59,6 +65,7 @@ router.post('/images', async (req, res) => {
         const searchTerm = req.body.searchTerm;
         console.log('searchTerm: ', searchTerm);
         console.log('request body: ', req.body);
+        console.log('parsed json array: ', parseJsonByteArray(req.body));
         const response = await imagesClient.search(searchTerm);
         console.log(response);
         return res.status(200).json({
