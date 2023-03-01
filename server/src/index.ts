@@ -57,6 +57,7 @@ router.post('/images', async (req, res) => {
     try {
         const searchTerm = req.body.searchTerm;
         console.log('searchTerm: ', searchTerm);
+        console.log('request body: ', req.body);
         const response = await imagesClient.search(searchTerm);
         console.log(response);
         return res.status(200).json({
