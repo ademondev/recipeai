@@ -11,6 +11,8 @@ dotenv.config();
 // Express config
 const app = express();
 const PORT: number = Number(process.env?.PORT) || 5000;
+const router = express.Router();
+app.use('/.netlify/functions/index', router);
 
 // OpenAI config
 const configuration = new Configuration({
@@ -24,10 +26,11 @@ const CSE_ID = `${process.env.GOOGLE_PROGRAMMABLE_SEARCH_ENGINE}`;
 const API_KEY = `${process.env.GOOGLE_API_KEY}`;
 const imagesClient = new GoogleImages(CSE_ID, API_KEY);
 
+
 app.use(express.json());
 app.use(cors());
 
-app.post('/completion', async (req, res) => {
+router.post('/completion', async (req, res) => {
     try {
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
@@ -50,7 +53,7 @@ app.post('/completion', async (req, res) => {
     }
 });
 
-app.post('/images', async (req, res) => {
+router.post('/images', async (req, res) => {
     try {
         const searchTerm = req.body.searchTerm;
         console.log('searchTerm: ', searchTerm);
