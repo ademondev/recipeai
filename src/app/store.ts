@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import ingredientsSlice from '../features/ingredients/ingredientsSlice';
 import recipeDataSlice from '../features/recipe/recipeDataSlice.js';
 import searchBarSlice from '../features/searchbar/searchBarSlice';
+import bottomMenuSlice from '../features/bottomMenu/bottomMenuSlice';
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +17,8 @@ const store = configureStore({
   reducer: {
     ingredients: ingredientsSlice,
     recipeData: persistedRecipeDataSlice,
-    searchBar: searchBarSlice
+    searchBar: searchBarSlice,
+    bottomMenu: bottomMenuSlice
   }
 });
 const persistor = persistStore(store);
