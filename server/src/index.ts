@@ -28,12 +28,6 @@ const imagesClient = new GoogleImages(CSE_ID, API_KEY);
 
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
 
 // For some reason, req.body of all requests is a Uint8Array, so we need to parse it to JSON
 function parseJsonByteArray(byteArray: Uint8Array): any {
@@ -54,6 +48,9 @@ router.post('/completion', async (req, res) => {
         });
         const processedData = extractRecipeDataFromResponse(response.data.choices[0].text === undefined ? '' : response.data.choices[0].text);
         console.log(processedData === null ? 'There was an error' : processedData);
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(200).json({
             success: true,
             data: processedData
