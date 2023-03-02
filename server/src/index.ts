@@ -48,9 +48,11 @@ app.use((req, res, next) => {
 router.post('/completion', async (req, res) => {
     try {
         console.log('request body: ', req.body);
+        const parsed = parseJsonByteArray(req.body);
+        console.log('parsed body: ', parsed);
         const response = await openai.createCompletion({
             model: 'text-davinci-003',
-            prompt: `${promptPreProcess(parseJsonByteArray(req.body).message)}`,
+            prompt: `${promptPreProcess(parsed.message)}`,
             max_tokens: MAX_TOKENS
         });
         const processedData = extractRecipeDataFromResponse(response.data.choices[0].text === undefined ? '' : response.data.choices[0].text);
