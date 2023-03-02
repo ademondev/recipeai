@@ -37,14 +37,6 @@ function parseJsonByteArray(byteArray: Uint8Array): any {
     return JSON.parse(jsonString);
 }
 
-// Even using cors(), I still get a CORS error, so I'm using this middleware to set the headers
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-
 router.post('/completion', async (req, res) => {
     try {
         console.log('request body: ', req.body);
@@ -57,9 +49,6 @@ router.post('/completion', async (req, res) => {
         });
         const processedData = extractRecipeDataFromResponse(response.data.choices[0].text === undefined ? '' : response.data.choices[0].text);
         console.log(processedData === null ? 'There was an error' : processedData);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(200).json({
             success: true,
             data: processedData
@@ -82,9 +71,6 @@ router.post('/images', async (req, res) => {
         console.log('parsed json array: ', parseJsonByteArray(req.body));
         const response = await imagesClient.search(searchTerm);
         console.log(response);
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         return res.status(200).json({
             success: true,
             data: response
