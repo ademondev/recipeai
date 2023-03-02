@@ -92,7 +92,7 @@ const MainButtonMenu = () => {
             {buttons.map((button, index) => {
                 return (
                     <Link to={button.link} className={cx(classes.button, classes.center, { [classes.active]: active === index })}
-                        onClick={() => dispatch(changeButtonMenuState(index))}
+                        onClick={() => dispatch(changeButtonMenuState(index))} key={index}
                     >
                         <ActionIcon key={index} style={{ fontSize: button.iconSize }} 
                             className={cx({ [classes.link]: active === index})}
