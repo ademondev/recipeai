@@ -28,7 +28,9 @@ const imagesClient = new GoogleImages(CSE_ID, API_KEY);
 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 
 // For some reason, req.body of all requests is a Uint8Array, so we need to parse it to JSON
 function parseJsonByteArray(byteArray: Uint8Array): any {
