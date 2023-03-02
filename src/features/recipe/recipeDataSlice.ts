@@ -71,8 +71,8 @@ const initialState = {
     ] as SavedRecipesInterface[]
 };
 
-const ENDPOINT_RECIPE_DATA = 'http://localhost:5000/completion';
-const ENDPOINT_GOOGLE_IMAGES = 'http://localhost:5000/images';
+const ENDPOINT_RECIPE_DATA = `${import.meta.env.VITE_API_ENDPOINT_COMPLETION}`;
+const ENDPOINT_GOOGLE_IMAGES = `${import.meta.env.VITE_API_ENDPOINT_IMAGES}`;
 
 const fetchRecipeData = createAsyncThunk('recipeData/fetchRecipeData', async (ingredientsArray : string[]) => {
     const response = await fetch(ENDPOINT_RECIPE_DATA, {
