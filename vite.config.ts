@@ -11,9 +11,9 @@ export default defineConfig({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
       manifest: {
-        name: 'My Awesome App',
-        short_name: 'MyApp',
-        description: 'My Awesome App description',
+        name: 'RecipeAI',
+        short_name: 'RAI',
+        description: 'RecipeAI is a recipe search engine that uses AI to find the best recipes for you.',
         theme_color: '#ffffff',
         icons: [
           {
